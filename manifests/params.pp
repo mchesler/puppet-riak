@@ -40,7 +40,7 @@ class riak::params {
     default                     => false,
   }
 
-  $version = '1.3.0'
+  $version = '1.4.8'
   $version_maj_min = semver_maj_min($version)
   $use_repos = true
   $get = $::operatingsystem ? {
