@@ -79,7 +79,7 @@ class riak (
   $package             = hiera('package', $riak::params::package),
   $download            = hiera('download', $riak::params::download),
   $use_repos           = hiera('use_repos', $riak::params::use_repos),
-  $manage_repos        = hiera('manage_repos', true),
+  $manage_repos        = hiera('manage_repos', false),
   $download_hash       = hiera('download_hash', $riak::params::download_hash),
   $source              = hiera('source', ''),
   $template            = hiera('template', ''),
