@@ -111,7 +111,7 @@ class riak::appconfig(
       utc_log           => true,
     },
     riak_control => {
-      enabled  => false,
+      enabled  => true,
       auth     => 'userlist',
       userlist => ['__tuple', 'user', 'pass'],
       admin    => true,
