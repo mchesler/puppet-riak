@@ -58,7 +58,7 @@ class riak::params {
   $crash_log = "${log_dir}/crash.log"
 
   $erl_log_dir = '/var/log/riak'
-  $data_dir = '/var/lib/riak'
+  $data_dir = '/opt/riak'
   $lib_dir = '/usr/lib/riak'
   $bin_dir = '/usr/sbin'
   $etc_dir = '/etc/riak'
