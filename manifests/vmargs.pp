@@ -20,7 +20,7 @@ class riak::vmargs (
 ) inherits riak::params {
 
   $vmargs_cfg = merge({
-    '-name'      => "riak@${::ipaddress}",
+    '-name'      => "riak@${::fqdn}",
     '-setcookie' => 'riak',
     '-ip'        => $::ipaddress,
     '+K'         => true,
