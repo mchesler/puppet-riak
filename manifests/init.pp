@@ -273,13 +273,13 @@ class riak (
   }
 
   exec { 'join_riak_cluster':
-    command   => "/usr/sbin/riak-admin cluster join riak@${$riak::params::master_node};/usr/sbin/riak-admin cluster plan;/usr/sbin/riak-admin cluster commit"
-    onlyif    => [
-      "[[ '$::fqdn' == '${$riak::params::master_node}' ]]",
-      "riak-admin member-status | grep 'Valid:1'",
+    command => "/usr/sbin/riak-admin cluster join riak@${$riak::params::master_node};/usr/sbin/riak-admin cluster plan;/usr/sbin/riak-admin cluster commit",
+    onlyif  => [
+      "[ '$::fqdn' != '${$riak::params::master_node}' ]",
+      "riak-admin member-status | grep 'Valid:1 / Leaving:0 / Exiting:0 / Joining:0 / Down:0'"
     ],
-    require   => Service['riak'],
-    before    => Anchor['riak::end'],
+    require => Service['riak'],
+    before  => Anchor['riak::end'],
   }
 
   anchor { 'riak::end': }
