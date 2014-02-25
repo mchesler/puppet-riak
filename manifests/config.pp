@@ -72,9 +72,9 @@ class riak::config (
   sysctl::conf {
     # Minimize swappiness
     "vm.swappiness": value => 0;
-    # Increase default TCP send/receive buffers to 4MB
-    "net.core.rmem_default": value => 4194304;
-    "net.core.wmem_default": value => 4194304;
+    # Increase default TCP send/receive buffers to 8MB
+    "net.core.rmem_default": value => 8388608;
+    "net.core.wmem_default": value => 8388608;
     # Increase max TCP send/receive buffers to 16MB
     "net.core.rmem_max": value => 16777216;
     "net.core.wmem_max": value => 16777216;
