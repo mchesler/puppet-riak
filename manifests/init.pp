@@ -251,6 +251,7 @@ class riak (
     home    => $data_dir,
     require => [
       Group['riak'],
+      Package[$package],
       Anchor['riak::start'],
     ],
     before  => Anchor['riak::end'],
