@@ -98,6 +98,7 @@ class riak (
   $limits_template     = $riak::params::limits_template
 ) inherits riak::params {
 
+  include sysctl
   include stdlib
 
   $pkgfile = "/tmp/${$package}-${$version}.${$riak::params::package_type}"

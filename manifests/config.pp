@@ -68,10 +68,25 @@ class riak::config (
     }
   }
 
-  # file { '/etc/security/limits.conf':
-  #   owner   => 'root',
-  #   group   => 'root',
-  #   mode    => '644',
-  #   content => template($limits_template)
-  # }
+  # The sysctl module uses augeas to splice stuff into conf files
+  sysctl::conf {
+    # Minimize swappiness
+    "vm.swappiness": value => 0;
+    # Increase default TCP send/receive buffers to 4MB
+    "net.core.rmem_default": value => 4194304;
+    "net.core.wmem_default": value => 4194304;
+    # Increase max TCP send/receive buffers to 16MB
+    "net.core.rmem_max": value => 16777216;
+    "net.core.wmem_max": value => 16777216;
+    # Increase the length of the processor input queue
+    "net.core.netdev_max_backlog": value => 10000;
+    # Increase number of incomign connections
+    "net.core.somaxconn": value => 4000;
+    # Increase the number of outstanding syn requests allowed
+    "net.ipv4.tcp_max_syn_backlog": value => 40000;
+    # Decrease the time TCP FIN-WAIT-2 sockets are allowed to stick around
+    "net.ipv4.tcp_fin_timeout": value => 15;
+    # Allow TIME-WAIT sockets to be reused for new connections
+    "net.ipv4.tcp_tw_reuse": value => 1;
+  }
 }
