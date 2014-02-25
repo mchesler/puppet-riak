@@ -57,7 +57,7 @@ class riak::appconfig(
       platform_log_dir  => $riak::params::log_dir,
     },
     riak_kv => {
-      storage_backend       => '__atom_riak_kv_bitcask_backend',
+      storage_backend       => '__atom_riak_kv_eleveldb_backend',
       mapred_name           => 'mapred',
       mapred_system         => 'pipe',
       mapred_2i_pipe        => true,
