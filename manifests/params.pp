@@ -67,4 +67,10 @@ class riak::params {
 
   $ulimit = 4096
   $limits_template = 'riak/limits.conf.erb'
+
+  $master_node = $::environment ? {
+    'qa'      => 'riak-qa-1.laddersoffice.net',
+    'staging' => 'riak-staging-1.idc.theladders.com',
+    'prod'    => 'riak-1.idc.theladders.com',
+  }
 }

@@ -272,5 +272,15 @@ class riak (
     before  => Anchor['riak::end'],
   }
 
+  exec { 'join_riak_cluster':
+    command   => "/usr/sbin/riak-admin cluster join riak@${$riak::params::master_node};/usr/sbin/riak-admin cluster plan;/usr/sbin/riak-admin cluster commit"
+    onlyif    => [
+      "[[ '$::fqdn' == '${$riak::params::master_node}' ]]",
+      "riak-admin member-status | grep 'Valid:1'",
+    ],
+    require   => Service['riak'],
+    before    => Anchor['riak::end'],
+  }
+
   anchor { 'riak::end': }
 }
