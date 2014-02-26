@@ -112,7 +112,7 @@ class riak::appconfig(
     },
     riak_control => {
       enabled  => true,
-      auth     => 'userlist',
+      auth     => "__atom_none",
       userlist => ['__tuple', 'user', 'pass'],
       admin    => true,
     },
