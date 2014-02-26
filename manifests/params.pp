@@ -73,4 +73,10 @@ class riak::params {
     'staging' => 'riak-staging-1.idc.theladders.com',
     'prod'    => 'riak-1.idc.theladders.com',
   }
+
+  $ring_size = $::environment ? {
+    'qa'      => 64,
+    'staging' => 64,
+    'prod'    => 256,
+  }
 }
