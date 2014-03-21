@@ -88,5 +88,7 @@ class riak::config (
     "net.ipv4.tcp_fin_timeout": value => 15;
     # Allow TIME-WAIT sockets to be reused for new connections
     "net.ipv4.tcp_tw_reuse": value => 1;
+    # Allow TIME-WAIT sockets to be recycled
+    "net.ipv4.tcp_tw_recycle": value => 1;
   }
 }
