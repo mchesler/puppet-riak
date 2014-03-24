@@ -72,16 +72,20 @@ class riak::config (
   sysctl::conf {
     # Minimize swappiness
     "vm.swappiness": value => 0;
-    # Increase default TCP send/receive buffers to 8MB
+    # Increase default send/receive buffers to 8MB
     "net.core.rmem_default": value => 8388608;
     "net.core.wmem_default": value => 8388608;
-    # Increase max TCP send/receive buffers to 16MB
-    "net.core.rmem_max": value => 16777216;
-    "net.core.wmem_max": value => 16777216;
+    # Increase max send/receive buffers to 128MB
+    "net.core.rmem_max": value => 134217728;
+    "net.core.wmem_max": value => 134217728;
+    # Increase TCP send/receive buffers
+    "net.ipv4.tcp_mem": value => '134217728 134217728 134217728';
+    "net.ipv4.tcp_rmem": value => '4096 277750 134217728';
+    "net.ipv4.tcp_wmem": value => '4096 277750 134217728';
     # Increase the length of the processor input queue
-    "net.core.netdev_max_backlog": value => 10000;
+    "net.core.netdev_max_backlog": value => 300000;
     # Increase number of incomign connections
-    "net.core.somaxconn": value => 4000;
+    "net.core.somaxconn": value => 40000;
     # Increase the number of outstanding syn requests allowed
     "net.ipv4.tcp_max_syn_backlog": value => 40000;
     # Decrease the time TCP FIN-WAIT-2 sockets are allowed to stick around
@@ -90,5 +94,26 @@ class riak::config (
     "net.ipv4.tcp_tw_reuse": value => 1;
     # Allow TIME-WAIT sockets to be recycled
     "net.ipv4.tcp_tw_recycle": value => 1;
+    # Enable Selective Acknowledgements
+    "net.ipv4.tcp_sack": value => 1;
+    # Enable large TCP window scaling
+    "net.ipv4.tcp_window_scaling": value => 1;
+    # Increase frequency of TCP Keepalive probes
+    "net.ipv4.tcp_keepalive_intvl": value => 30;
+    # Dynamically adjust receive buffer size
+    "net.ipv4.tcp_moderate_rcvbuf": value => 1;
+  }
+  
+  # Perform some filesystem tuning...
+  # Ensure deadline I/O scheduler is in use
+  exec { 'deadline_scheduler':
+    command => 'echo deadline > /sys/block/sda/queue/scheduler',
+    unless  => 'cat /sys/block/sda/queue/scheduler | grep "\[deadline\]"',
+  }
+  
+  # Increase scheduler depth
+  exec { 'scheduler_depth':
+    command => 'echo 1024 > /sys/block/sda/queue/nr_requests',
+    unless  => '[ $(cat /sys/block/sda/queue/nr_requests) == "1024" ]',
   }
 }

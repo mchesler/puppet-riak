@@ -27,7 +27,7 @@ class riak::vmargs (
     '+A'         => 64,
     '-smp'       => 'enable',
     '-env'       => {
-      'ERL_MAX_PORTS'  => 4096,
+      'ERL_MAX_PORTS'  => 65536,
       'ERL_CRASH_DUMP' => "${$erl_log_dir}/erl_crash.dmp",
     }
   }, $cfg)
