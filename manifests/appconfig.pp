@@ -38,9 +38,10 @@ class riak::appconfig(
       inet_dist_listen_min => 6000,
       inet_dist_listen_max => 7999,
     },
-    riak_api  => {
-      pb_ip   => $::ipaddress,
-      pb_port => 8087,
+    riak_api => {
+      pb_ip      => $::ipaddress,
+      pb_port    => 8087,
+      pb_backlog => 12800,
     },
     riak_core => {
       ring_state_dir     => "${$riak::params::data_dir}/ring",
@@ -55,6 +56,7 @@ class riak::appconfig(
       platform_etc_dir  => $riak::params::etc_dir,
       platform_lib_dir  => $riak::params::lib_dir,
       platform_log_dir  => $riak::params::log_dir,
+      # enable_consensus  => true,
     },
     riak_kv => {
       storage_backend       => '__atom_riak_kv_eleveldb_backend',

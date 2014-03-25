@@ -207,7 +207,7 @@ class riak (
   }
 
   class { 'riak::appconfig':
-    absent   => $absent,
+    absent   => true, #$absent,
     source   => $source,
     template => $template,
     cfg      => $cfg,
@@ -227,7 +227,7 @@ class riak (
   }
 
   class { 'riak::vmargs':
-    absent  => $absent,
+    absent  => true, #$absent,
     cfg     => $vmargs_cfg,
     require => [
       File[$etc_dir],
@@ -236,7 +236,7 @@ class riak (
     before  => Anchor['riak::end'],
     notify  => $manage_service_autorestart,
   }
-
+  
   group { 'riak':
     ensure => present,
     system => true,
@@ -254,6 +254,22 @@ class riak (
       Package[$package],
       Anchor['riak::start'],
     ],
+    before  => Anchor['riak::end'],
+  }
+
+  file { 'riak.conf':
+    ensure => 'present',
+    path => "${$riak::params::etc_dir}/riak.conf",
+    content => template('riak/riak.conf.erb'),
+    owner   => 'riak',
+    group   => 'riak',
+    mode    => '0644',
+    require => [
+      User['riak'],
+      Group['riak'],
+      Anchor['riak::start'],
+    ],
+    notify  => Service['riak'],
     before  => Anchor['riak::end'],
   }
 
