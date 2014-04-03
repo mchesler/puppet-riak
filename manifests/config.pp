@@ -94,12 +94,16 @@ class riak::config (
     "net.ipv4.tcp_tw_reuse": value => 1;
     # Allow TIME-WAIT sockets to be recycled
     "net.ipv4.tcp_tw_recycle": value => 1;
+    # Decrease wait time between subsequent keepalive probes
+    "net.ipv4.tcp_keepalive_intvl": value => 1;
+    # Decrease number of probes sent and unacknowledged before the client considers the connection broken and notifies the application layer
+    "net.ipv4.tcp_keepalive_probes": value => 5;
+    # Decrease interval between last data packet sent and first keepalive probe
+    "net.ipv4.tcp_keepalive_time": value => 15;
     # Enable Selective Acknowledgements
     "net.ipv4.tcp_sack": value => 1;
     # Enable large TCP window scaling
     "net.ipv4.tcp_window_scaling": value => 1;
-    # Increase frequency of TCP Keepalive probes
-    "net.ipv4.tcp_keepalive_intvl": value => 30;
     # Dynamically adjust receive buffer size
     "net.ipv4.tcp_moderate_rcvbuf": value => 1;
   }
